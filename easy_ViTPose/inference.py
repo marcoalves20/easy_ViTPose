@@ -202,7 +202,8 @@ class VitInference:
                                                                  org_h // 2]]),
                                                scale=np.array([[org_w, org_h]]),
                                                unbiased=True, use_udp=True)
-        return np.concatenate([points[:, :, ::-1], prob], axis=2)
+        # Keep original (x, y) coordinate order - don't swap
+        return np.concatenate([points, prob], axis=2)
 
     @abc.abstractmethod
     def _inference(self, img: np.ndarray) -> np.ndarray:

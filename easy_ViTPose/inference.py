@@ -268,7 +268,8 @@ class VitInference:
 
             keypoints = self._inference(img_inf)[0]
             # Transform keypoints to original image
-            keypoints[:, :2] += bbox[:2][::-1] - [top_pad, left_pad]
+            # bbox[:2] is [x1, y1], keypoints[:, :2] is [x, y] - no reversal needed
+            keypoints[:, :2] += bbox[:2] - [left_pad, top_pad]
             frame_keypoints[id] = keypoints
             scores_bbox[id] = score  # Replace this with avg_keypoint_conf*person_obj_conf. For now, only person_obj_conf from yolo is being used.
 
